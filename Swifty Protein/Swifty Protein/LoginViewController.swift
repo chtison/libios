@@ -29,6 +29,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIGestureRecog
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationItem.title = "Swifty Proteins"
+    }
+    
     @IBAction func signIn(_ sender: Any) {
         if inputLogin.text == nil || inputLogin.text != login || inputPassword.text == nil || inputPassword.text != password {
             let alert = UIAlertController(title: "Sign In Failed", message: "User/Password are \(login)/\(password)", preferredStyle: .alert)

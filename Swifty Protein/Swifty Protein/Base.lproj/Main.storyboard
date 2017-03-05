@@ -170,7 +170,7 @@
             </objects>
             <point key="canvasLocation" x="-372" y="248.72563718140933"/>
         </scene>
-        <!--Ligands-->
+        <!--Proteins-->
         <scene sceneID="ciI-bh-QFt">
             <objects>
                 <tableViewController id="Grq-4q-8SC" customClass="ProteinTableViewController" customModule="Swifty_Protein" customModuleProvider="target" sceneMemberID="viewController">
@@ -203,6 +203,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="VUL-mk-5cg" kind="show" identifier="ShowLigand" id="TiQ-Ng-UGi"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -210,7 +213,7 @@
                             <outlet property="delegate" destination="Grq-4q-8SC" id="5J5-P1-0ft"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Ligands" id="fwW-cH-r7X"/>
+                    <navigationItem key="navigationItem" title="Proteins" id="fwW-cH-r7X"/>
                     <connections>
                         <outlet property="searchBar" destination="5Hi-NK-aKM" id="LIc-Yj-x8h"/>
                     </connections>
@@ -218,6 +221,38 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vQ3-Ja-aRV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="503" y="248"/>
+        </scene>
+        <!--Protein View Controller-->
+        <scene sceneID="SCG-oB-bFJ">
+            <objects>
+                <viewController id="VUL-mk-5cg" customClass="ProteinViewController" customModule="Swifty_Protein" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MeJ-aN-Xei"/>
+                        <viewControllerLayoutGuide type="bottom" id="bRP-Rm-S91"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="683-9G-QUB">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" loops="NO" sceneName="Ligand.scn" allowsCameraControl="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mmf-me-Kkc">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                            </sceneKitView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Mmf-me-Kkc" firstAttribute="top" secondItem="MeJ-aN-Xei" secondAttribute="bottom" id="63z-yo-58w"/>
+                            <constraint firstItem="Mmf-me-Kkc" firstAttribute="leading" secondItem="683-9G-QUB" secondAttribute="leading" id="XpW-sf-bba"/>
+                            <constraint firstAttribute="trailing" secondItem="Mmf-me-Kkc" secondAttribute="trailing" id="nXv-k2-oxF"/>
+                            <constraint firstItem="bRP-Rm-S91" firstAttribute="top" secondItem="Mmf-me-Kkc" secondAttribute="bottom" id="yaM-Dk-jE8"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="sceneView" destination="Mmf-me-Kkc" id="2XR-cR-tJF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zS9-cz-25e" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1325.625" y="248.2394366197183"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="HRq-zg-3Ft">

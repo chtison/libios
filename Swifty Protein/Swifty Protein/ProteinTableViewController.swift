@@ -20,6 +20,8 @@ class ProteinTableViewController: UITableViewController, UISearchBarDelegate {
         ligandsList = try! String(contentsOf: Bundle.main.url(forResource: "ligands", withExtension: "txt")!).components(separatedBy: "\n")
     }
     
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -98,7 +100,9 @@ class ProteinTableViewController: UITableViewController, UISearchBarDelegate {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "ShowLigand" {
+            let cell = sender as! UITableViewCell
+            (segue.destination as! ProteinViewController).ligandId = cell.textLabel?.text!
+        }
     }
 }
