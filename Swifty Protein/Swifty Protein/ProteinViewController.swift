@@ -14,11 +14,19 @@ class ProteinViewController: UIViewController {
     @IBOutlet weak var sceneView: SCNView!
     @IBOutlet weak var viewCircle: CircleView!
     @IBOutlet weak var labelAtom: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var buttonAction: UIBarButtonItem!
 
     lazy var ligandId: String? = nil
     lazy var nodes: [(String, SCNNode)]! = nil
+    lazy var request: DataRequest? = nil
     
     // MARK: - Lifecycle
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        request?.cancel()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,16 +37,27 @@ class ProteinViewController: UIViewController {
         clearInfos()
         func handleError(message: String) {
             let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: .cancel) { [unowned self] (alert) in
-                self.navigationController!.popViewController(animated: true)
+            alertController.addAction(UIAlertAction(title: "OK", style: .cancel) { [weak self] (alert) in
+                _ = self?.navigationController?.popViewController(animated: true)
                 
             })
-            OperationQueue.main.addOperation { [unowned self] in
-                self.present(alertController, animated: true)
+            OperationQueue.main.addOperation { [weak self] in
+                self?.activityIndicator.stopAnimating()
+                self?.present(alertController, animated: true)
             }
         }
         let url = "https://files.rcsb.org/ligands/view/\(ligandId)_model.pdb"
-        Alamofire.request(url).response { (response: DefaultDataResponse) in
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        request = Alamofire.request(url).response { (response: DefaultDataResponse) in
+            OperationQueue.main.addOperation {
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            }
+            if response.error != nil {
+                if response.error?.localizedDescription != "cancelled" {
+                    handleError(message: response.error!.localizedDescription)
+                }
+                return
+            }
             if response.response != nil && response.response!.statusCode != 200 {
                 handleError(message: "HTTP status code: \(response.response!.statusCode)")
                 return
@@ -143,6 +162,7 @@ class ProteinViewController: UIViewController {
             camera.camera = SCNCamera()
             camera.position = SCNVector3(mid.x, mid.y, mid.z + 50)
             OperationQueue.main.addOperation { [unowned self] in
+                self.activityIndicator.stopAnimating()
                 self.nodes = nodes.map { ($1.0, $1.1) }
                 self.sceneView.scene!.rootNode.addChildNode(camera)
                 for (_, node) in nodes {
@@ -153,6 +173,7 @@ class ProteinViewController: UIViewController {
                         self.sceneView.scene!.rootNode.addChildNode(v2)
                     }
                 }
+                self.buttonAction.isEnabled = true
             }
         }
     }
@@ -195,6 +216,7 @@ class ProteinViewController: UIViewController {
         })
         actionSheet.addAction(UIAlertAction(title: "Toggle atoms", style: .`default`) { [unowned self] (action) in
             OperationQueue.main.addOperation {
+                self.clearInfos()
                 for node in self.sceneView.scene!.rootNode.childNodes {
                     if node.geometry is SCNSphere {
                         node.isHidden = !node.isHidden

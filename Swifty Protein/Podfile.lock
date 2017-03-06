@@ -1,16 +1,12 @@
 PODS:
   - Alamofire (4.4.0)
-  - AlamofireNetworkActivityIndicator (2.1.0):
-    - Alamofire (~> 4.1)
 
 DEPENDENCIES:
   - Alamofire
-  - AlamofireNetworkActivityIndicator
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
-  AlamofireNetworkActivityIndicator: 4716f6554bdfb9c7cf13b1e0e3af21163129690a
 
-PODFILE CHECKSUM: 17b3d17c92a7e275d6e20bdfd78eaaa6a72bfe98
+PODFILE CHECKSUM: 55641d19599d40fdd230fddb0028f97e8d9d3eeb
 
 COCOAPODS: 1.2.0

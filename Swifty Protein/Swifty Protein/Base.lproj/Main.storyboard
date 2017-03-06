@@ -191,11 +191,11 @@
                                 <rect key="frame" x="0.0" y="72" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GYm-VH-0Rp" id="gS7-ZO-FOt">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4zx-f3-TUl">
-                                            <rect key="frame" x="15" y="0.0" width="384" height="43.666666666666664"/>
+                                            <rect key="frame" x="15" y="0.0" width="384" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
                                             <nil key="textColor"/>
@@ -251,23 +251,29 @@
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="layerBackgroundColor">
-                                        <color key="value" red="0.3257500254802656" green="0.6622106171558324" blue="0.97936772360000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="value" red="0.32575002549999998" green="0.66221061719999996" blue="0.97936772360000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="C" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mPd-bH-IvD">
-                                <rect key="frame" x="349" y="77" width="17" height="27.666666666666671"/>
+                                <rect key="frame" x="349" y="76" width="17" height="29"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="EAn-Jz-g1o">
+                                <rect key="frame" x="189" y="350" width="37" height="37"/>
+                                <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Mmf-me-Kkc" firstAttribute="top" secondItem="MeJ-aN-Xei" secondAttribute="bottom" id="63z-yo-58w"/>
                             <constraint firstItem="hlL-Fj-3pW" firstAttribute="centerY" secondItem="mPd-bH-IvD" secondAttribute="centerY" id="QL5-Lr-0bz"/>
+                            <constraint firstItem="EAn-Jz-g1o" firstAttribute="centerY" secondItem="683-9G-QUB" secondAttribute="centerY" id="QhG-qX-X5N"/>
                             <constraint firstItem="Mmf-me-Kkc" firstAttribute="leading" secondItem="683-9G-QUB" secondAttribute="leading" id="XpW-sf-bba"/>
                             <constraint firstItem="hlL-Fj-3pW" firstAttribute="top" secondItem="MeJ-aN-Xei" secondAttribute="bottom" constant="16" id="eqS-Pu-bNs"/>
+                            <constraint firstItem="EAn-Jz-g1o" firstAttribute="centerX" secondItem="683-9G-QUB" secondAttribute="centerX" id="gsh-bs-Zx2"/>
                             <constraint firstAttribute="trailing" secondItem="Mmf-me-Kkc" secondAttribute="trailing" id="nXv-k2-oxF"/>
                             <constraint firstItem="hlL-Fj-3pW" firstAttribute="leading" secondItem="mPd-bH-IvD" secondAttribute="trailing" constant="8" id="piU-pk-Ra9"/>
                             <constraint firstItem="hlL-Fj-3pW" firstAttribute="trailing" secondItem="683-9G-QUB" secondAttribute="trailingMargin" id="yYa-mC-1f0"/>
@@ -276,7 +282,7 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Ligand ID" id="Cu1-QI-mi8">
-                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="jxA-Hf-VQS">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="action" id="jxA-Hf-VQS">
                             <connections>
                                 <action selector="action:" destination="VUL-mk-5cg" id="xot-Bc-1XC"/>
                             </connections>
@@ -284,6 +290,8 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="EAn-Jz-g1o" id="9mn-D5-hUQ"/>
+                        <outlet property="buttonAction" destination="jxA-Hf-VQS" id="UHI-Pv-KYa"/>
                         <outlet property="labelAtom" destination="mPd-bH-IvD" id="eJV-i2-jcb"/>
                         <outlet property="sceneView" destination="Mmf-me-Kkc" id="2XR-cR-tJF"/>
                         <outlet property="viewCircle" destination="hlL-Fj-3pW" id="WD0-Iz-lJH"/>

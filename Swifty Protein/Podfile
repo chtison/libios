@@ -9,5 +9,4 @@ target 'Swifty Protein' do
 
   # Pods for Swifty Protein
   pod 'Alamofire'
-  pod 'AlamofireNetworkActivityIndicator'
 end
