@@ -12,18 +12,21 @@ import SceneKit
 class ProteinViewController: UIViewController {
 
     @IBOutlet weak var sceneView: SCNView!
+    @IBOutlet weak var viewCircle: CircleView!
+    @IBOutlet weak var labelAtom: UILabel!
 
     lazy var ligandId: String? = nil
+    lazy var nodes: [(String, SCNNode)]! = nil
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(sceneView.scene!.rootNode.childNodes.count)
         guard let ligandId = ligandId else {
             return
         }
         navigationItem.title = ligandId
+        clearInfos()
         func handleError(message: String) {
             let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "OK", style: .cancel) { [unowned self] (alert) in
@@ -74,15 +77,14 @@ class ProteinViewController: UIViewController {
                 "Ca": UIColor(red:0.24, green:1.00, blue:0.00, alpha:1.0),
                 "Sc": UIColor(red:0.90, green:0.90, blue:0.90, alpha:1.0),
             ]
-            var nodes: [String: SCNNode] = [:]
             var links: [String: [String: SCNNode]] = [:]
+            var nodes: [String: (String, SCNNode)] = [:]
             let normalizedVectorStartingPosition = GLKVector3Make(0, 1, 0)
             for line in pdb {
                 if line.isEmpty {
                     continue
                 }
                 if line[0] == "ATOM" {
-                    print(line[1])
                     if line.count < 12 {
                         handleError(message: "GET \(url) returned malformed pdb formatted data.")
                         return
@@ -97,13 +99,13 @@ class ProteinViewController: UIViewController {
                         return
                     }
                     node.position = SCNVector3(x, y, z)
-                    nodes[line[1]] = node
+                    nodes[line[1]] = (line[11], node)
                 } else if line[0] == "CONECT" {
                     if line.count < 3 {
                         handleError(message: "GET \(url) returned malformed pdb formatted data.")
                         return
                     }
-                    guard let startNode = nodes[line[1]] else {
+                    guard let startNode = nodes[line[1]]?.1 else {
                         continue
                     }
                     if links[line[1]] == nil {
@@ -115,7 +117,7 @@ class ProteinViewController: UIViewController {
                         if links[id]?[line[1]] != nil || links[line[1]]![id] != nil {
                             continue
                         }
-                        guard let end = nodes[id]?.position else {
+                        guard let end = nodes[id]?.1.position else {
                             continue
                         }
                         let height = abs(sqrt(pow(start.x-end.x, 2)+pow(start.y-end.y, 2)+pow(start.z-end.z, 2)))
@@ -133,17 +135,18 @@ class ProteinViewController: UIViewController {
             }
             var mid = SCNVector3()
             for (_, node) in nodes {
-                mid.x = (mid.x + node.position.x) / 2
-                mid.y = (mid.y + node.position.y) / 2
-                mid.z = (mid.z + node.position.z) / 2
+                mid.x = (mid.x + node.1.position.x) / 2
+                mid.y = (mid.y + node.1.position.y) / 2
+                mid.z = (mid.z + node.1.position.z) / 2
             }
             let camera = SCNNode()
             camera.camera = SCNCamera()
             camera.position = SCNVector3(mid.x, mid.y, mid.z + 50)
             OperationQueue.main.addOperation { [unowned self] in
+                self.nodes = nodes.map { ($1.0, $1.1) }
                 self.sceneView.scene!.rootNode.addChildNode(camera)
                 for (_, node) in nodes {
-                    self.sceneView.scene!.rootNode.addChildNode(node)
+                    self.sceneView.scene!.rootNode.addChildNode(node.1)
                 }
                 for (_, v1) in links {
                     for (_, v2) in v1 {
@@ -157,5 +160,57 @@ class ProteinViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func handleTap(_ sender: UITapGestureRecognizer) {
+        clearInfos()
+        let point = sender.location(in: sceneView)
+        let hit = sceneView.hitTest(point, options: [.clipToZRange: true, .firstFoundOnly: true, .ignoreHiddenNodes: true])
+        if hit.count == 0 || hit.count > 1 {
+            return
+        }
+        for node in nodes {
+            if node.1 == hit[0].node {
+                viewCircle.layerBackgroundColor = node.1.geometry!.materials.first!.diffuse.contents as! UIColor
+                labelAtom.text = node.0
+                break
+            }
+        }
+    }
+    
+    func clearInfos() {
+        viewCircle.layerBackgroundColor = UIColor.clear
+        labelAtom.text = nil
+    }
+    
+    @IBAction func action(_ sender: Any) {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        actionSheet.addAction(UIAlertAction(title: "Share", style: .`default`) { [unowned self] (action) in
+            OperationQueue.main.addOperation {
+                let image = self.sceneView.snapshot()
+                let activityController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+                self.present(activityController, animated: true, completion: nil)
+            }
+        })
+        actionSheet.addAction(UIAlertAction(title: "Toggle atoms", style: .`default`) { [unowned self] (action) in
+            OperationQueue.main.addOperation {
+                for node in self.sceneView.scene!.rootNode.childNodes {
+                    if node.geometry is SCNSphere {
+                        node.isHidden = !node.isHidden
+                    }
+                }
+            }
+        })
+        actionSheet.addAction(UIAlertAction(title: "Toggle links", style: .`default`) { [unowned self] (action) in
+            OperationQueue.main.addOperation {
+                for node in self.sceneView.scene!.rootNode.childNodes {
+                    if node.geometry is SCNCylinder {
+                        node.isHidden = !node.isHidden
+                    }
+                }
+            }
+        })
+        present(actionSheet, animated: true)
     }
 }

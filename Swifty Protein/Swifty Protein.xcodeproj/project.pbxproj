@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		52DA466A1E6C1F2100696B11 /* ProteinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DA46691E6C1F2100696B11 /* ProteinViewController.swift */; };
 		52DDE7311E6C435F0061D62C /* Ligand.scn in Resources */ = {isa = PBXBuildFile; fileRef = 52DDE7301E6C435F0061D62C /* Ligand.scn */; };
+		52DDE7351E6D5B5A0061D62C /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DDE7341E6D5B5A0061D62C /* CircleView.swift */; };
 		52F907161E6ACC13001EE83F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F907151E6ACC13001EE83F /* AppDelegate.swift */; };
 		52F9071B1E6ACC13001EE83F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52F907191E6ACC13001EE83F /* Main.storyboard */; };
 		52F9071D1E6ACC13001EE83F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52F9071C1E6ACC13001EE83F /* Assets.xcassets */; };
@@ -24,6 +25,7 @@
 		04B5F298A020A9D78374AB6E /* Pods_Swifty_Protein.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Swifty_Protein.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52DA46691E6C1F2100696B11 /* ProteinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProteinViewController.swift; sourceTree = "<group>"; };
 		52DDE7301E6C435F0061D62C /* Ligand.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = Ligand.scn; sourceTree = "<group>"; };
+		52DDE7341E6D5B5A0061D62C /* CircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		52F907121E6ACC13001EE83F /* Swifty Protein.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swifty Protein.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		52F907151E6ACC13001EE83F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52F9071A1E6ACC13001EE83F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 				52F9072D1E6AE3B8001EE83F /* GradientView.swift */,
 				52F9072F1E6AF8E0001EE83F /* ProteinTableViewController.swift */,
 				52DA46691E6C1F2100696B11 /* ProteinViewController.swift */,
+				52DDE7341E6D5B5A0061D62C /* CircleView.swift */,
 				52F907191E6ACC13001EE83F /* Main.storyboard */,
 				52DDE7301E6C435F0061D62C /* Ligand.scn */,
 				52F9071C1E6ACC13001EE83F /* Assets.xcassets */,
@@ -229,6 +232,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52DDE7351E6D5B5A0061D62C /* CircleView.swift in Sources */,
 				52F907281E6ACDC8001EE83F /* LoginViewController.swift in Sources */,
 				52F907161E6ACC13001EE83F /* AppDelegate.swift in Sources */,
 				52DA466A1E6C1F2100696B11 /* ProteinViewController.swift in Sources */,

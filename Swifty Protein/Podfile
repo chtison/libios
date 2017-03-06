@@ -8,6 +8,6 @@ target 'Swifty Protein' do
   use_frameworks!
 
   # Pods for Swifty Protein
-  pod 'Alamofire', '~> 4.4'
-  pod 'AlamofireNetworkActivityIndicator', '~> 2.1'
+  pod 'Alamofire'
+  pod 'AlamofireNetworkActivityIndicator'
 end

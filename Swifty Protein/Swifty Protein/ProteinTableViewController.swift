@@ -31,6 +31,11 @@ class ProteinTableViewController: UITableViewController, UISearchBarDelegate {
         searchBar.returnKeyType = .done
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        searchBar(searchBar, textDidChange: searchBar.text ?? "")
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         ligandsList = []
@@ -77,6 +82,9 @@ class ProteinTableViewController: UITableViewController, UISearchBarDelegate {
     // MARK: - Search bar delegate
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            return
+        }
         loadLigandsList()
         var indexPath: IndexPath? = nil
         for (i, ligand) in ligandsList.enumerated() {
@@ -100,6 +108,7 @@ class ProteinTableViewController: UITableViewController, UISearchBarDelegate {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        self.view.endEditing(false)
         if segue.identifier == "ShowLigand" {
             let cell = sender as! UITableViewCell
             (segue.destination as! ProteinViewController).ligandId = cell.textLabel?.text!
