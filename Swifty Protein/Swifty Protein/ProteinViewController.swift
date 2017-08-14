@@ -198,7 +198,7 @@ class ProteinViewController: UIViewController {
                     if let color = materials[line[11].capitalized] {
                         sphere.firstMaterial!.diffuse.contents = color
                     } else {
-                        print("Color not found: \(materials[line[11].capitalized])")
+                        print("Color not found: \(String(describing: materials[line[11].capitalized]))")
                         sphere.firstMaterial!.diffuse.contents = UIColor.black
                     }
                     let node = SCNNode(geometry: sphere)
